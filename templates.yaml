@@ -1,0 +1,11 @@
+sensor:
+  #Ameren PSP
+  # The object of this sensor is to coordinate the sensor.psp_XXXX with
+  # corresponding time frames. 
+  - unique_id: current_psp_price
+    name: "Current PSP Price"
+    unit_of_measurement: "USD/kWh"
+    state: >
+      {% set hour = now().strftime("%H") %}
+      {% set psp_sensor = 'sensor.psp_' ~ hour ~ '00' %}
+      {{ states(psp_sensor) | float }}      
